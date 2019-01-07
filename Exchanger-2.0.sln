@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLogic", "CommonLogic\CommonLogic.csproj", "{325A96CB-5832-459F-8302-22501AE9A4A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeDataConnection", "TradeDataConnection\TradeDataConnection.csproj", "{D87C2449-C95C-4AF6-8CE4-9BE8787C6324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeConnection", "TradeDataConnection\TradeConnection.csproj", "{D87C2449-C95C-4AF6-8CE4-9BE8787C6324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeExecuteConnection", "TradeExecuteConnection\TradeExecuteConnection.csproj", "{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeExecuteVendor", "TradeExecuteConnection\TradeExecuteVendor.csproj", "{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

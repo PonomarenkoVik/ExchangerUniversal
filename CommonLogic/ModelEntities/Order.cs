@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+using CommonLogic.ExternalInterfaces;
+
+namespace CommonLogic.ModelEntities
+{
+    public class Order
+    {
+        public Order(string orderId, DateTime applicationDate, IInstrument instrument, double sum1, double sum2, double straitCrossRate, double reveseCrossRate, bool isOwn)
+        {
+            OrderId = orderId;
+            ApplicationDate = applicationDate;
+            Instrument = instrument;
+            Sum1 = sum1;
+            Sum2 = sum2;
+            StraitCrossRate = straitCrossRate;
+            ReveseCrossRate = reveseCrossRate;
+            IsOwn = isOwn;
+        }
+        public string OrderId { get; }
+        public DateTime ApplicationDate { get; }
+        public IInstrument Instrument { get; }
+        public double Sum1 { get; set; }
+        public double Sum2 { get; }
+        public double StraitCrossRate { get; }
+        public double ReveseCrossRate { get; }
+        public bool IsOwn { get; }
+    }
+}
