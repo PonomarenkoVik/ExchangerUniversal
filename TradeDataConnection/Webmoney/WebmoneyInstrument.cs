@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CommonLogic.ExternalInterfaces;
 
-namespace TradeConnection
+namespace TradeConnection.Webmoney
 {
     class WebmoneyInstrument : IInstrument
     {
@@ -14,6 +14,13 @@ namespace TradeConnection
             Currency1 = currency1;
             Currency2 = currency2;
         }
+
+        public int InstrumentId { get; }
+        public string Currency1 { get; }
+        public string Currency2 { get; }
+        public string InstrumentName => Currency1 + "/" + Currency2;
+        public IVendor Vendor { get; }
+
 
         internal static List<IInstrument> Instruments { get; } = new List<IInstrument>()
         {
@@ -38,11 +45,5 @@ namespace TradeConnection
             new WebmoneyInstrument(31,  WebmoneyDataVendor.Instance, "WMU", "WMG"),
             new WebmoneyInstrument(32,  WebmoneyDataVendor.Instance, "WMG", "WMU"),
         };
-
-        public int InstrumentId { get; }
-        public string Currency1 { get; }
-        public string Currency2 { get; }
-        public string InstrumentName => Currency1 + "/" + Currency2;
-        public IVendor Vendor { get; }
     }
 }

@@ -6,6 +6,6 @@ namespace CommonLogic.ExternalInterfaces
 {
     public interface ITradableConnection
     {
-        List<IVendor> GetVendors();
+        List<IVendor> GetVendors { get; }
     }
 }
