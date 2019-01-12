@@ -3,6 +3,7 @@ using CommonLogic.ModelEntities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace TradeConnection.Webmoney
 {
@@ -16,8 +17,8 @@ namespace TradeConnection.Webmoney
 
         public List<IInstrument> GetInstrumentList() => WebmoneyInstrument.Instruments;
 
-        public List<Order> GetLevel2List(IInstrument instrument) => _connection.GetLevel2(instrument);
+        public async Task<List<Order>> GetLevel2List(IInstrument instrument) =>await _connection.GetLevel2(instrument);
 
-        public ITradeResult Execute(ITradeCommand tradeCommand) => _connection.Execute(tradeCommand);
+        public async Task<ITradeResult> Execute(ITradeCommand tradeCommand) => await _connection.Execute(tradeCommand);
     }
 }

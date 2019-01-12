@@ -38,7 +38,7 @@ namespace TradeConnection.Webmoney
             return page;
         }
 
-        internal ITradeResult Execute(ITradeCommand tradeCommand)
+        internal Task<ITradeResult> Execute(ITradeCommand tradeCommand)
         {
             throw new NotImplementedException();
         }
