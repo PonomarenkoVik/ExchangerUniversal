@@ -20,6 +20,7 @@ namespace TradeConnection.Webmoney
                 continue;
                 string[] orderLines = line.Replace(" ", string.Empty).Split(OrderPointSeparator.ToCharArray());
                 int id = int.Parse(orderLines[0]);
+                //Привет Маринка И Сашунька
 
             }
         }
