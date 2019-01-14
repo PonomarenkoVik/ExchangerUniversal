@@ -6,5 +6,7 @@ namespace CommonLogic.ExternalInterfaces
 {
     public interface ITradeCommand
     {
+        string VendorName { get; }
+        string InstrumentName { get; }
     }
 }

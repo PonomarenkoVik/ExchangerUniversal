@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonLogic", "CommonLogic\CommonLogic.csproj", "{325A96CB-5832-459F-8302-22501AE9A4A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeConnection", "TradeDataConnection\TradeConnection.csproj", "{D87C2449-C95C-4AF6-8CE4-9BE8787C6324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeConnection", "TradeDataConnection\TradeConnection.csproj", "{D87C2449-C95C-4AF6-8CE4-9BE8787C6324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeExecuteVendor", "TradeExecuteConnection\TradeExecuteVendor.csproj", "{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeExecuteVendor", "TradeExecuteConnection\TradeExecuteVendor.csproj", "{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B44A4291-0DF8-4BEC-8CBB-53C659E18819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{954E1E82-CCD4-4D8E-9D05-B2A75B5AACB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

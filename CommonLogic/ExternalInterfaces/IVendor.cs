@@ -11,7 +11,7 @@ namespace CommonLogic.ExternalInterfaces
     {
         string Name { get; }
         int Id { get; }
-        List<IInstrument> GetInstrumentList();
+        Dictionary<string, IInstrument> GetInstruments();
         Task<List<Order>> GetLevel2List(IInstrument instrument);
         Task<ITradeResult> Execute(ITradeCommand tradeCommand);
     }
