@@ -13,12 +13,8 @@ namespace CommonLogic.ExternalInterfaces
         /// Returns instruments are sorted by vendors
         /// </summary>
         /// <returns>vendor, instruments</returns>
-        Dictionary<string, Dictionary<string, IInstrument>> Instruments { get; }
-
-
+        Dictionary<string, List<string>> Instruments { get; }
         Task<ITradeResult> SendCommand(ITradeCommand command);
-        Task<List<Order>> GetLevel2(IInstrument instrument);
-
-        IInstrument GetInstrument(string vendorName, string instrumentName);
+        Task<List<Order>> GetLevel2(string vendorName, string instrumentName, int sourceType);
     }
 }

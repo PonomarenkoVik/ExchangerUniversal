@@ -12,7 +12,7 @@ namespace CommonLogic.ExternalInterfaces
         string Name { get; }
         int Id { get; }
         Dictionary<string, IInstrument> GetInstruments();
-        Task<List<Order>> GetLevel2List(IInstrument instrument);
         Task<ITradeResult> Execute(ITradeCommand tradeCommand);
+        Task<List<Order>> GetLevel2List(IInstrument instrument, int sourceType);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using CommonLogic.ExternalInterfaces;
+using CommonLogic.ModelEntities;
 
 namespace TradeConnection.Webmoney
 {
@@ -17,9 +19,12 @@ namespace TradeConnection.Webmoney
         }
 
         public int InstrumentId { get; }
+        public double BankRate { get; set; } = double.NaN;
         public string Currency1 { get; }
         public string Currency2 { get; }
         public string InstrumentName { get; }
         public IVendor Vendor { get; }
+        public async Task<List<Order>> GetLevel2(int sourceType) => Vendor != null ? await Vendor.GetLevel2List(this, sourceType) : null;
+       
     }
 }

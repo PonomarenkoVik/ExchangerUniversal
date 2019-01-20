@@ -12,14 +12,14 @@ namespace TradeConnection.Webmoney
         public string Name => "wm.exchanger.ru";
         public int Id => 1;
 
-        private static Connection _connection => Connection.Instance;
+        private static WebmoneyClient _webmoneyClient => WebmoneyClient.Instance;
         public static IVendor Instance { get; } = new WebmoneyDataVendor();
 
         public Dictionary<string, IInstrument> GetInstruments() => Instruments;
 
-        public async Task<List<Order>> GetLevel2List(IInstrument instrument) =>await _connection.GetLevel2(instrument);
+        public async Task<List<Order>> GetLevel2List(IInstrument instrument, int sourceType = 0) => await _webmoneyClient.GetLevel2(instrument, (SourceType)sourceType);
 
-        public async Task<ITradeResult> Execute(ITradeCommand tradeCommand) => await _connection.Execute(tradeCommand);
+        public async Task<ITradeResult> Execute(ITradeCommand tradeCommand) => await _webmoneyClient.Execute(tradeCommand);
 
 
         internal static Dictionary<string, IInstrument> Instruments { get; } = new Dictionary<string, IInstrument>()

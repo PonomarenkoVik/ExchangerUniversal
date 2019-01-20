@@ -14,15 +14,13 @@ namespace TradeConnection.Webmoney
         private static readonly char[] FirstStringSeparator = new[] {' ', ';', ':'};
         private static readonly string[] OrderExceptString = new string[]{"<td", "<tr", "</tr", "&", "%", "div", "class" };
         private static readonly byte OrderSymbolNumber = 8;
-        private static readonly byte OrderPointNumber = 9;
+        private static readonly byte OrderPointNumber = 8;
         private  static readonly int[] OrderIndexes = new int[]{0, 1, 3, 7};
-        internal static List<Order> CreateOrdersByPage(StringBuilder page)
+        internal static List<Order> CreateOrdersByWebPage(string page)
         {
             List<Order> orders = new List<Order>();
             string orderId = String.Empty;
             string instrumentName = String.Empty;
-            string currency1 = String.Empty;
-            string currency2 = String.Empty;
             double straightCrossRate = double.NaN;
             double reverseCrossRate = double.NaN;
             DateTime applicationDate = DateTime.MinValue;
@@ -30,18 +28,17 @@ namespace TradeConnection.Webmoney
             double sum2 = double.NaN;
 
 
-            string[] orderlines = page.ToString().Split(OrderSeparator, StringSplitOptions.RemoveEmptyEntries);
+            string[] orderlines = page.Split(OrderSeparator, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in orderlines)
             {
-                List<string> orderPointlines = GetOrderPoints(line);
-                if (orderPointlines == null || orderPointlines.Count < 8)
+                List<string> orderPointlines = GetWebPageOrderPoints(line);
+                if (orderPointlines == null || orderPointlines.Count < OrderPointNumber)
                     continue;
                 orderId = orderPointlines[0];
+               
                 instrumentName = orderPointlines[1];
                 if (!double.TryParse(orderPointlines[2], out reverseCrossRate))
                     continue;
-                currency1 = orderPointlines[3];
-                currency2 = orderPointlines[4];
               
                 bool normalFormat = orderPointlines[5].Length == 19;
                 string date = orderPointlines[normalFormat ? 5 : 8].Substring(0, 19);
@@ -54,10 +51,8 @@ namespace TradeConnection.Webmoney
                 if (!double.TryParse(orderPointlines[normalFormat ? 8 : 5], out straightCrossRate))
                     continue;
 
-                
                 if (!WebmoneyDataVendor.Instruments.TryGetValue(instrumentName, out IInstrument instrument))
                     continue;
-
 
                 Order order = new Order(orderId, applicationDate, instrument, sum1, sum2, straightCrossRate, reverseCrossRate, false );
                 orders.Add(order);
@@ -66,7 +61,7 @@ namespace TradeConnection.Webmoney
             return orders;
         }
 
-        private static List<string> GetOrderPoints(string line)
+        private static List<string> GetWebPageOrderPoints(string line)
         {
             List<string> orderPointlines = new List<string>();
             if (line.Length < OrderSymbolNumber)
@@ -105,6 +100,16 @@ namespace TradeConnection.Webmoney
             }
 
             return orderPointlines;
+        }
+
+        public static List<Order> CreateOrdersByXMLPage(string xmlPage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static List<Order> CreateOrdersByMixPage(string xmlPage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

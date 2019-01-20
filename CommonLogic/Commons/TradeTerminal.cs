@@ -4,6 +4,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonLogic.ExternalInterfaces;
 using CommonLogic.ModelEntities;
+using  System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace CommonLogic.Commons
 {
@@ -39,7 +41,22 @@ namespace CommonLogic.Commons
         public  static  ITradeTerminal GetInstance(List<ITradableConnection> connections) => new TradeTerminal(connections);
 
 
-        public Dictionary<string, Dictionary<string, IInstrument>> Instruments => _instrumentsByVendors;
+        public Dictionary<string, List<string>> Instruments
+        {
+            get
+            {
+                if (_instrumentsByVendors == null || _instrumentsByVendors.Count == 0)
+                    return null;
+
+                Dictionary<string, List<string>> instruments = new Dictionary<string, List<string>>();
+                foreach (var instrument in _instrumentsByVendors)
+                {
+                    var instrList = instrument.Value.Select((i) => i.Key).ToList();
+                    instruments.Add(instrument.Key, instrList);
+                }
+                return instruments;
+            }
+        }
 
         public async Task<ITradeResult> SendCommand(ITradeCommand command)
         {
@@ -50,12 +67,10 @@ namespace CommonLogic.Commons
             return await vendor.Execute(command);
         }
 
-        public async Task<List<Order>> GetLevel2(IInstrument instrument)
+        public Task<List<Order>> GetLevel2(string vendorName, string instrumentName, int sourceType)
         {
-            if (instrument == null)
-                return null;
-            var vendor = GetVendor(instrument);
-            return vendor != null ?  await vendor.GetLevel2List(instrument) : null;
+            var instrument = GetInstrument(vendorName, instrumentName);
+            return instrument?.GetLevel2(sourceType);
         }
 
         public IInstrument GetInstrument(string vendorName, string instrName)
@@ -73,14 +88,6 @@ namespace CommonLogic.Commons
             return instrument;
         }
 
-        private IVendor GetVendor(IInstrument instrument)
-        {
-            if (instrument == null || instrument.Vendor == null || string.IsNullOrEmpty(instrument.Vendor.Name))
-                return null;
-
-            _vendors.TryGetValue(instrument.Vendor.Name, out IVendor vendor);
-            return vendor;
-        }
 
         private IVendor GetVendor(ITradeCommand command)
         {
