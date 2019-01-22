@@ -31,29 +31,7 @@ namespace TradeConnection.Webmoney
 
         public static WebmoneyClient Instance { get; } = new WebmoneyClient();
 
-
-
-        internal async Task<List<Order>> GetLevel2(IInstrument instrument, SourceType sourceType)
-        {
-            string webPage;
-            string XMLPage;
-            switch (sourceType)
-            {
-                case SourceType.Web:
-                    webPage = await GetPage(instrument, PageType.Web);
-                    return WebmoneyHelper.CreateOrdersByWebPage(webPage);
-                case SourceType.XML:
-                    XMLPage = await GetPage(instrument, PageType.XML);
-                    return WebmoneyHelper.CreateOrdersByXMLPage(XMLPage);
-                case SourceType.Mix:
-                    webPage = await GetPage(instrument, PageType.Web);
-                    XMLPage = await GetPage(instrument, PageType.XML);
-                    return WebmoneyHelper.CreateOrdersByMixPage(XMLPage);
-            }
-            return null;
-        }
-
-        private async Task<string> GetPage(IInstrument instrument, PageType pageType)
+        internal async Task<string> GetPage(IInstrument instrument, PageType pageType)
         {
             WebClient webClient = new WebClient();
            

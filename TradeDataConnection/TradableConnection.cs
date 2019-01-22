@@ -8,6 +8,6 @@ namespace TradeConnection
 {
     public class TradableConnection : ITradableConnection
     {
-        public List<IVendor> GetVendors() => new List<IVendor>() { new WebmoneyDataVendor() };
+        public List<IVendor> GetVendors() => new List<IVendor>() { new WmExchangerVendor() };
     }
 }
