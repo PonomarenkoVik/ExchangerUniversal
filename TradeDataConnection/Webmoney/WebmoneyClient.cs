@@ -12,8 +12,8 @@ namespace TradeConnection.Webmoney
     {
         public WebmoneyClient()
         {
-            ProxyPort = 61785;
-            ProxyURL = "191.100.25.15";
+            ProxyPort = 34986;
+            ProxyURL = "213.33.164.158";
         }
 
         public string ProxyURL { get; set; }
@@ -31,18 +31,24 @@ namespace TradeConnection.Webmoney
 
         public static WebmoneyClient Instance { get; } = new WebmoneyClient();
 
-        internal async Task<string> GetPage(IInstrument instrument, PageType pageType)
+        internal async Task<string> GetLevel2Page(IInstrument instrument, PageType pageType)
+        {
+            string page = (pageType == PageType.Web) ? _tradeUrl : _tradeXMLUrl;
+            return await GetPage(page + instrument.InstrumentId);
+        }
+
+        private async Task<string> GetPage(string url)
         {
             WebClient webClient = new WebClient();
-           
+
             if (!string.IsNullOrEmpty(ProxyURL) && ProxyPort > 0)
                 webClient.Proxy = new WebProxy(ProxyURL, _proxyPort);
-            
+
             try
             {
-                return  await webClient.DownloadStringTaskAsync(GetTradeUrlByInstrument(instrument, pageType));
+                return await webClient.DownloadStringTaskAsync(url);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -52,20 +58,22 @@ namespace TradeConnection.Webmoney
             }
         }
 
+        public async Task<Dictionary<string, IInstrument>> GetInstruments(IVendor vendor)
+        {
+            string page = await GetPage(_bestRates);
+            return WebmoneyHelper.CreateInstruments(page, vendor);
+        }
 
         internal Task<ITradeResult> Execute(ITradeCommand tradeCommand)
         {
             throw new NotImplementedException();
         }
 
-        private string GetTradeUrlByInstrument(IInstrument instrument, PageType pageType)
-        {
-            string page = (pageType == PageType.Web) ? _tradeUrl : _tradeXMLUrl;
-            return page + instrument.InstrumentId;
-        }
+      
 
         private static readonly string _tradeUrl = "https://wm.exchanger.ru/asp/wmlist.asp?exchtype=";
         private static readonly string _tradeXMLUrl = "https://wm.exchanger.ru/asp/XMLwmlist.asp?exchtype=";
+        private static readonly string _bestRates = "https://wm.exchanger.ru/asp/XMLbestRates.asp";
         private int _proxyPort;
     }
 }

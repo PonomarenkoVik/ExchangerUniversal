@@ -9,7 +9,7 @@ namespace TradeConnection.Webmoney
 {
     class WebmoneyInstrument : IInstrument
     {
-        public WebmoneyInstrument(int instrumentId, IVendor vendor, string currency1, string currency2, string instrumentName)
+        public WebmoneyInstrument(string instrumentId, IVendor vendor, string currency1, string currency2, string instrumentName)
         {
             InstrumentId = instrumentId;
             Vendor = vendor;
@@ -18,7 +18,7 @@ namespace TradeConnection.Webmoney
             InstrumentName = instrumentName;
         }
 
-        public int InstrumentId { get; }
+        public string InstrumentId { get; }
         public double BankRate { get; set; } = double.NaN;
         public string Currency1 { get; }
         public string Currency2 { get; }

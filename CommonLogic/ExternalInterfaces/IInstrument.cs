@@ -8,7 +8,7 @@ namespace CommonLogic.ExternalInterfaces
 {
     public interface IInstrument
     {
-        int InstrumentId { get; }
+        string InstrumentId { get; }
         double BankRate { get; set; }
         string InstrumentName { get; }
         string Currency1 { get; }

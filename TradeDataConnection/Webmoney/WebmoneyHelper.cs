@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using CommonLogic.ExternalInterfaces;
 using CommonLogic.ModelEntities;
@@ -168,6 +169,32 @@ namespace TradeConnection.Webmoney
             return null;
         }
 
+
+        public static Dictionary<string, IInstrument> CreateInstruments(string page, IVendor vendor)
+        {
+            var instruments = new Dictionary<string, IInstrument>();
+            var instrList = page.Split(instrSeparators, StringSplitOptions.RemoveEmptyEntries);
+            instrList = instrList.Where((i) => i.Length > 70).ToArray();
+            for (int i = 0; i < instrList.Length; i++)
+            {
+                var instrument = CreateInstrument(instrList[i], vendor);
+                instruments.Add(instrument.InstrumentName, instrument);
+            }
+            return instruments;
+        }
+
+        private static IInstrument CreateInstrument(string instr, IVendor vendor)
+        {
+            int pos = instr.IndexOf(instrPointSeparator);
+            var tempLines = instr.Substring(0, pos).Trim().Split(instrNameSeparator);
+            string currency1 = tempLines[0];
+            string currency2 = tempLines[1];
+            string instrName = currency1 + "/" + currency2;
+
+            string instrId = instr.Split(exchTypeSeparators, StringSplitOptions.RemoveEmptyEntries)[1].Replace("\"", String.Empty);
+            return new WebmoneyInstrument(instrId, vendor, currency1, currency2, instrName);
+        }
+
         private static readonly byte OrderSymbolNumber = 8;
         private static readonly byte OrderPointNumber = 8;
 
@@ -192,7 +219,16 @@ namespace TradeConnection.Webmoney
         private static readonly string percentbankrateSeparator = "procentbankrate=\"";
         private static readonly string allamountinSeparator = "allamountin=\"";
         private static readonly string querydateSeparator = "querydate=\"";
-    //XML page separators
-}
+        //XML page separators
+
+        //XML instrument separators
+        private static readonly string[] instrSeparators = new []{"Direct=\"", "/>" };
+        private static readonly string[] exchTypeSeparators = new[] { "exchtype=\"", "/>" };
+        private static readonly char instrPointSeparator = '\"';
+        private static readonly char instrNameSeparator = '-';
+
+        //XML instrument separators
+
+    }
 }
         

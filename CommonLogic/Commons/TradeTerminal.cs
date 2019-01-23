@@ -13,30 +13,9 @@ namespace CommonLogic.Commons
     {
         public TradeTerminal(List<ITradableConnection> connections)
         {
-            Initialize(connections);
+            _connections = connections;
         }
 
-        private void Initialize(List<ITradableConnection> connections)
-        {
-            _vendors = new Dictionary<string, IVendor>();
-            _instrumentsByVendors = new Dictionary<string, Dictionary<string, IInstrument>>();
-
-            foreach (ITradableConnection connection in connections)
-            {
-                var vendors = connection.GetVendors();
-                foreach (IVendor vendor in vendors)
-                {
-                    if (_vendors.ContainsKey(vendor.Name))
-                    continue;
-                    var instruments = vendor.GetInstruments();
-                    if (instruments == null || instruments.Count < 1)
-                    continue;
-                    _vendors.Add(vendor.Name, vendor);
-                    _instrumentsByVendors.Add(vendor.Name, vendor.GetInstruments());
-                }
-               
-            }
-        }
 
         public  static  ITradeTerminal GetInstance(List<ITradableConnection> connections) => new TradeTerminal(connections);
 
@@ -45,16 +24,11 @@ namespace CommonLogic.Commons
         {
             get
             {
+                if (_instrumentsByVendors == null)
+                    InstrumentInitialize();
                 if (_instrumentsByVendors == null || _instrumentsByVendors.Count == 0)
                     return null;
-
-                Dictionary<string, List<string>> instruments = new Dictionary<string, List<string>>();
-                foreach (var instrument in _instrumentsByVendors)
-                {
-                    var instrList = instrument.Value.Select((i) => i.Key).ToList();
-                    instruments.Add(instrument.Key, instrList);
-                }
-                return instruments;
+                return new Dictionary<string, List<string>>(_instrByVendorStr);
             }
         }
 
@@ -75,17 +49,13 @@ namespace CommonLogic.Commons
 
         public IInstrument GetInstrument(string vendorName, string instrName)
         {
-            if (!_vendors.TryGetValue(vendorName, out IVendor vendor))
-                return null;
+            if (_instrumentsByVendors == null)
+                InstrumentInitialize();
 
-            var instruments = vendor.GetInstruments();
-            if (instruments == null || instruments.Count < 1)
-                return null;
+            if (!_instrumentsByVendors.TryGetValue(vendorName, out Dictionary<string, IInstrument> instruments))
+                return null;           
 
-            if (!instruments.TryGetValue(instrName, out IInstrument instrument))
-                return null;
-
-            return instrument;
+            return !instruments.TryGetValue(instrName, out IInstrument instrument) ? null : instrument;
         }
 
 
@@ -98,8 +68,37 @@ namespace CommonLogic.Commons
             return vendor;
         }
 
+        private void InstrumentInitialize()
+        {
+            _vendors = new Dictionary<string, IVendor>();
+            _instrumentsByVendors = new Dictionary<string, Dictionary<string, IInstrument>>();
 
+            foreach (ITradableConnection connection in _connections)
+            {
+                var vendors = connection.GetVendors();
+                foreach (IVendor vendor in vendors)
+                {
+                    if (_vendors.ContainsKey(vendor.Name))
+                        continue;
+                    var instruments = vendor.GetInstruments().Result;
+                    if (instruments == null || instruments.Count < 1)
+                        continue;
+                    _vendors.Add(vendor.Name, vendor);
+                    _instrumentsByVendors.Add(vendor.Name, instruments);
+                }
+
+                _instrByVendorStr = new Dictionary<string, List<string>>();
+                foreach (var instrument in _instrumentsByVendors)
+                {
+                    var instrList = instrument.Value.Select((i) => i.Key).ToList();
+                    _instrByVendorStr.Add(instrument.Key, instrList);
+                }
+            }
+        }
+
+        private Dictionary<string, List<string>> _instrByVendorStr;
         private Dictionary<string, Dictionary<string, IInstrument>> _instrumentsByVendors;
         private Dictionary<string, IVendor> _vendors;
+        private List<ITradableConnection> _connections;
     }
 }

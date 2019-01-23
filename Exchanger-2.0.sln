@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeExecuteVendor", "Trade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{B44A4291-0DF8-4BEC-8CBB-53C659E18819}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangerTerminal", "ExchangerTerminal\ExchangerTerminal.csproj", "{936172C6-1B37-4876-B7D2-5312BB488B38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B44A4291-0DF8-4BEC-8CBB-53C659E18819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{936172C6-1B37-4876-B7D2-5312BB488B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{936172C6-1B37-4876-B7D2-5312BB488B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{936172C6-1B37-4876-B7D2-5312BB488B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{936172C6-1B37-4876-B7D2-5312BB488B38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
