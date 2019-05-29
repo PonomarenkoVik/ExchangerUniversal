@@ -88,10 +88,6 @@
       <Project>{D87C2449-C95C-4AF6-8CE4-9BE8787C6324}</Project>
       <Name>TradeConnection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TradeExecuteConnection\TradeExecuteVendor.csproj">
-      <Project>{954e1e82-ccd4-4d8e-9d05-b2a75b5aacb6}</Project>
-      <Name>TradeExecuteVendor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

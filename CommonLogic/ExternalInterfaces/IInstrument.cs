@@ -14,6 +14,6 @@ namespace CommonLogic.ExternalInterfaces
         string Currency1 { get; }
         string Currency2 { get; }
         IVendor Vendor { get; }
-        Task<List<Order>> GetLevel2(int sourceType);
+        List<Order> GetLevel2Async(int sourceType);
     }
 }

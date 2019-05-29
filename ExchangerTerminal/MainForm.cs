@@ -30,18 +30,21 @@ namespace ExchangerTerminal
         private void button1_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(StartT);
+            
 
         }
 
         private void StartT()
         {
+            _terminal.GetAssets("wm.exchanger.ru", null);
+
             var instr = _terminal.Instruments;
 
             foreach (var i in instr)
             {
                 foreach (var name in i.Value)
                 {
-                    var level2 = _terminal.GetLevel2(i.Key, name, 1).Result;
+                    var level2 = _terminal.GetLevel2Async(i.Key, name, 1);
                 }
             }
 

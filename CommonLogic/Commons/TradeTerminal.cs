@@ -25,32 +25,43 @@ namespace CommonLogic.Commons
             get
             {
                 if (_instrumentsByVendors == null)
-                    InstrumentInitialize();
+                    Initialize();
                 if (_instrumentsByVendors == null || _instrumentsByVendors.Count == 0)
                     return null;
                 return new Dictionary<string, List<string>>(_instrByVendorStr);
             }
         }
 
-        public async Task<ITradeResult> SendCommand(ITradeCommand command)
+        public ITradeResult SendCommandAsync(ITradeCommand command)
         {
             if (command == null)
                 return null;
 
             var vendor = GetVendor(command);
-            return await vendor.Execute(command);
+            return  vendor.ExecuteAsync(command);
         }
 
-        public Task<List<Order>> GetLevel2(string vendorName, string instrumentName, int sourceType)
+        public List<Order> GetLevel2Async(string vendorName, string instrumentName, int sourceType)
         {
             var instrument = GetInstrument(vendorName, instrumentName);
-            return instrument?.GetLevel2(sourceType);
+            return instrument?.GetLevel2Async(sourceType);
+        }
+
+        public List<IAsset> GetAssets(string vendorName, string account)
+        {
+            if (_vendors == null)
+            {
+                Initialize();
+            }
+            _vendors.TryGetValue(vendorName, out IVendor vendor);
+            vendor.GetAssets(null);
+            return null;
         }
 
         public IInstrument GetInstrument(string vendorName, string instrName)
         {
             if (_instrumentsByVendors == null)
-                InstrumentInitialize();
+                Initialize();
 
             if (!_instrumentsByVendors.TryGetValue(vendorName, out Dictionary<string, IInstrument> instruments))
                 return null;           
@@ -68,7 +79,7 @@ namespace CommonLogic.Commons
             return vendor;
         }
 
-        private void InstrumentInitialize()
+        private void Initialize()
         {
             _vendors = new Dictionary<string, IVendor>();
             _instrumentsByVendors = new Dictionary<string, Dictionary<string, IInstrument>>();
@@ -80,7 +91,7 @@ namespace CommonLogic.Commons
                 {
                     if (_vendors.ContainsKey(vendor.Name))
                         continue;
-                    var instruments = vendor.GetInstruments().Result;
+                    var instruments = vendor.GetInstrumentsAsync();
                     if (instruments == null || instruments.Count < 1)
                         continue;
                     _vendors.Add(vendor.Name, vendor);

@@ -14,7 +14,10 @@ namespace CommonLogic.ExternalInterfaces
         /// </summary>
         /// <returns>vendor, instruments</returns>
         Dictionary<string, List<string>> Instruments { get; }
-        Task<ITradeResult> SendCommand(ITradeCommand command);
-        Task<List<Order>> GetLevel2(string vendorName, string instrumentName, int sourceType);
+        ITradeResult SendCommandAsync(ITradeCommand command);
+        List<Order> GetLevel2Async(string vendorName, string instrumentName, int sourceType);
+
+        List<IAsset> GetAssets(string vendorName, string account);
+
     }
 }

@@ -11,8 +11,21 @@ namespace CommonLogic.ExternalInterfaces
     {
         string Name { get; }
         int Id { get; }
-        Task<Dictionary<string, IInstrument>> GetInstruments();
-        Task<ITradeResult> Execute(ITradeCommand tradeCommand);
-        Task<List<Order>> GetLevel2List(IInstrument instrument, int sourceType);
+        Dictionary<string, IInstrument> GetInstrumentsAsync();
+        ITradeResult ExecuteAsync(ITradeCommand tradeCommand);
+        List<Order> GetLevel2Async(IInstrument instrument, int sourceType);
+
+        /// <summary>
+        /// Getting own orders by definitive instrument or all instrument (instrument = null)
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="instrument"></param>
+        /// <returns></returns>
+        List<Order> GetOwnOrdersAsync(IAccount account, IInstrument instrument = null);
+
+        List<IAsset> GetAssets(IAccount account);
+
+        List<ITrade> GetAssetHistory(IAccount account, IAsset asset);
+
     }
 }

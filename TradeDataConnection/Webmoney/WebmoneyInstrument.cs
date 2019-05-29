@@ -24,7 +24,7 @@ namespace TradeConnection.Webmoney
         public string Currency2 { get; }
         public string InstrumentName { get; }
         public IVendor Vendor { get; }
-        public async Task<List<Order>> GetLevel2(int sourceType) => Vendor != null ? await Vendor.GetLevel2List(this, sourceType) : null;
+        public List<Order> GetLevel2Async(int sourceType) => Vendor?.GetLevel2Async(this, sourceType);
        
     }
 }

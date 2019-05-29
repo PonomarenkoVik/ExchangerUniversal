@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using CommonLogic.ExternalInterfaces;
 using CommonLogic.ModelEntities;
+using WebMoney.Cryptography;
+using WebMoney.XmlInterfaces;
+using WebMoney.XmlInterfaces.BasicObjects;
+
 
 namespace TradeConnection.Webmoney
 {
@@ -69,11 +73,29 @@ namespace TradeConnection.Webmoney
             throw new NotImplementedException();
         }
 
-      
+        public Task<List<Order>> GetOwnOrdersAsync(IAccount account, IInstrument instrument)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public Task<List<IAsset>> GetAssetsAsync(Initializer initializer)
+        {
+            if (initializer == null)
+                return null;
+
+            var purseInfoFilter = new PurseInfoFilter(initializer.Id) {Initializer = initializer};
+
+            var purseInfoRegister = purseInfoFilter.Submit();
+            return null;
+        }
+
 
         private static readonly string _tradeUrl = "https://wm.exchanger.ru/asp/wmlist.asp?exchtype=";
         private static readonly string _tradeXMLUrl = "https://wm.exchanger.ru/asp/XMLwmlist.asp?exchtype=";
         private static readonly string _bestRates = "https://wm.exchanger.ru/asp/XMLbestRates.asp";
         private int _proxyPort;
+
+       
     }
 }

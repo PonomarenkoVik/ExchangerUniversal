@@ -16,13 +16,13 @@ namespace TestConsole
         {
             ITradeTerminal tradeTerminal = new TradeTerminal(new List<ITradableConnection>(){new TradableConnection()});
         
-            var orders = tradeTerminal.GetLevel2("wm.exchanger.ru", "WMZ/WMU", 2).Result;
+            var orders = tradeTerminal.GetLevel2Async("wm.exchanger.ru", "WMZ/WMU", 2);
            
         }
 
-         private static async Task<List<Order>> GetLevel2(IInstrument instrument, ITradeTerminal terminal)
+         private static List<Order> GetLevel2(IInstrument instrument, ITradeTerminal terminal)
         {
-            return await terminal.GetLevel2("wm.exchanger.ru", "WMZ/WMU", 2);
+            return terminal.GetLevel2Async("wm.exchanger.ru", "WMZ/WMU", 2);
         }
     }
 } 

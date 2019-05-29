@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommonLogic\CommonLogic.csproj" />
+    <ProjectReference Include="..\WebMoney.Cryptography\WebMoney.Cryptography.csproj" />
+    <ProjectReference Include="..\WebMoney.XmlInterfaces\WebMoney.XmlInterfaces.csproj" />
   </ItemGroup>
 
 </Project>
